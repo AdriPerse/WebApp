@@ -193,6 +193,7 @@ with st.sidebar:
                 st.session_state["pdf_qa_model"].init_models()
                 st.session_state["pdf_qa_model"].vector_db_pdf()
                 st.session_state["pdf_qa_model"].retreival_qa_chain()
+                st.session_state["pdf_file_name"] = pdf_file.name
                 st.sidebar.success("PDF processed successfully")
             except Exception as e:
                 st.error(f"An error occurred: {e}")
@@ -200,7 +201,9 @@ with st.sidebar:
 
 
 if "pdf_file_name" in st.session_state:
-    st.write(f"Currently loaded PDF: {st.session_state['pdf_file_name']}")
+    pdf_name = st.session_state["pdf_file_name"].rsplit(".", 1)[0]  # Remove file extension
+    model_name = llm.replace(" ", "_").lower()
+    csv_filename = f"qa_results_{pdf_name}_{model_name}.csv"
 
 # Create two tabs
 tab1, tab2 = st.tabs(["Batch Q&A", "Interactive Q&A"])
@@ -239,7 +242,7 @@ with tab1:
                 st.download_button(
                     label="Download results as CSV",
                     data=csv,
-                    file_name="qa_results.csv",
+                    file_name=csv_filename,
                     mime="text/csv",
                 )
             else:

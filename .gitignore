@@ -14,6 +14,7 @@
 *.tax2010
 *.vcf
 *.xml
+*.pdf
 
 ### JupyterNotebooks ###
 # gitignore template for Jupyter Notebooks
@@ -191,6 +192,7 @@ cython_debug/
 ### Python Patch ###
 # Poetry local configuration file - https://python-poetry.org/docs/configuration/#local-configuration
 poetry.toml
+secrets.toml
 
 # ruff
 .ruff_cache/
