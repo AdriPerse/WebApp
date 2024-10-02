@@ -1,12 +1,11 @@
-import  openai
+import openai
+import streamlit as st
 from langchain_community.document_loaders import PyPDFLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_openai import ChatOpenAI
 from langchain_community.vectorstores import Chroma
 from langchain.chains import RetrievalQA
-#from langchain_community.embeddings import  HuggingFaceEmbeddings
 from langchain_huggingface import HuggingFaceEndpoint, HuggingFaceEmbeddings
-from utils.constants import *
 
 
 
@@ -87,7 +86,7 @@ class PdfQA:
 
         if (self.config["llm"] == LLM_OPENAI_GPT35) or (self.config["llm"] == LLM_OPENAI_GPT4O) or (self.config["llm"] == LLM_OPENAI_GPT4O_MINI) or (self.config["llm"] == LLM_OPENAI_GPT4):
             self.qa = RetrievalQA.from_chain_type(
-                llm=ChatOpenAI(model_name=self.config["llm"], temperature=0),
+                llm=ChatOpenAI(model_name=self.config["llm"], temperature=0,openai_api_key=OPENAI_API_KEY),
                 chain_type="stuff",
                 retriever=self.retriever,
                 return_source_documents=True
